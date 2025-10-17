@@ -1,5 +1,7 @@
 package calculator;
 
+import java.util.regex.*;
+
 public class StringCalculator {
 	public static int add(String input) {
     	if(input == null || input.isEmpty()) {
@@ -10,7 +12,13 @@ public class StringCalculator {
     }
 	
 	private static String[] splitNumbers(String input) {
-		//커스텀 구분자 추후 확장
+		Pattern pattern = Pattern.compile("//(.)\\\\n(.*)");
+		Matcher matcher = pattern.matcher(input);
+		if(matcher.matches()) {
+			String customDelimiter = matcher.group(1);
+			String numbers = matcher.group(2);
+			return numbers.split(Pattern.quote(customDelimiter));
+		}
 		return input.split(",|:");
 	}
 	
