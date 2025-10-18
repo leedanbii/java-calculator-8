@@ -26,10 +26,21 @@ public class StringCalculator {
 		int total = 0;
 		for(String numStr: numbers) {
 			if(numStr.isEmpty()) continue;
-			int number = Integer.parseInt(numStr);
-			//예외처리 추후 확장
+			int number = positiveParseInt(numStr);
 			total += number;
 		}
 		return total;
+	}
+	
+	private static int positiveParseInt(String numStr) {
+		try {
+			int number = Integer.parseInt(numStr);
+			if (number < 0) {
+				throw new IllegalArgumentException("음수는 계산할 수 없습니다.");
+			}
+			return number;
+		}catch (NumberFormatException e) {
+			throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+		}
 	}
 }
